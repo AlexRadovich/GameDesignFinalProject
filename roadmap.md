@@ -14,3 +14,19 @@ feat(scroll to zoom & drop through platforms): Can zoom in/out around the cursor
 
 * Next/To-do:
 Start final project out of lab, brainstorm game ideas
+
+### 04/08/2026 6 p.m.
+
+* Goal:
+set up the file structure and hierarchy in such a way that I can easily modify or scale systems or ideas later. Get the base game state up and running.
+
+* Implementation:
+Using the previous semester projects to work out the basic structure/game loop. I might look up some things to help with more advanced file structure ideas.
+
+* Commit message:
+chore(files): set up file strucure and game skeleton
+
+* Next/To-do:
+Design screens and first character
+
+
