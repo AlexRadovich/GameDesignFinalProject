@@ -8,6 +8,10 @@ class TitleScreen():
         self.game = game
 
 
+    def startup(self):
+        pass
+
+
     def update(self):
 
         if is_key_pressed(KeyboardKey.KEY_ENTER):
@@ -17,3 +21,7 @@ class TitleScreen():
     def draw(self):
         draw_text("TITLESCRN DRAW", 100, 100, 30, RED)
 
+
+    def shutdown(self):
+        pass
+        

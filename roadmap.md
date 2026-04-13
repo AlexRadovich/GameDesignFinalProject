@@ -29,4 +29,17 @@ chore(files): set up file strucure and game skeleton
 * Next/To-do:
 Design screens and first character
 
+### 04/12/2026 9 p.m.
+
+* Goal:
+implement the character select screen and maybe some of the actual characters that could be selected
+
+* Implementation:
+Use my Mid-semester menu select screen as an idea and build off of that
+
+* Commit message:
+feat(character): added character select screen 
+
+* Next/To-do:
+Make title screen or level one, finish character designs
 

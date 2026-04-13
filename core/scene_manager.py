@@ -16,6 +16,7 @@ class SceneManager():
 
     def add_scene(self, screen, scene):
         self.screens[screen] = scene
+        self.screens[screen].startup()
 
 
     def update(self):
@@ -24,5 +25,9 @@ class SceneManager():
 
     def draw(self):
         self.screens[self.current_scene].draw()
+
+    def shutdown(self):
+        for scene in self.screens:
+            scene.shutdown()
 
 

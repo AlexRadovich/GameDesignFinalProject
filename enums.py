@@ -6,3 +6,9 @@ class Scenes(IntEnum):
     TITLE = 1
     CHARACTER_SELECT = 2
     LEVEL_ONE = 3
+
+class Characters(IntEnum):
+
+    ADSPACE = 1
+    TESTSUBJECT = 2
+
