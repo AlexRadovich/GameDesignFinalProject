@@ -12,3 +12,8 @@ class Characters(IntEnum):
     ADSPACE = 1
     TESTSUBJECT = 2
 
+class Worls(IntEnum):
+
+    AIR = 1
+    SOLID = 2
+    ROPE = 3

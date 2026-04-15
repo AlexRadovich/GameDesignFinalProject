@@ -35,7 +35,7 @@ Design screens and first character
 implement the character select screen and maybe some of the actual characters that could be selected
 
 * Implementation:
-Use my Mid-semester menu select screen as an idea and build off of that
+Use my Mid-semester menu select screen as an idea and build off of that. Drawings made using aseprite
 
 * Commit message:
 feat(character): added character select screen 
@@ -43,3 +43,17 @@ feat(character): added character select screen
 * Next/To-do:
 Make title screen or level one, finish character designs
 
+
+### 04/15/2026 10 a.m.
+
+* Goal: 
+start the development of level one, tie in the character select
+
+* Implementation:
+use the https://github.com/NguyenLe15325/Python-raylib/blob/main/11.2D_platformer_clone.py file as inspiration on how to encode a level into a tilemap, include my character selection logic
+
+* Commit message:
+chore(lvl1): add the core structure for level one and the basic foundations for getting the character in the level
+
+* Next/To-do:
+flesh out lvl 1 more

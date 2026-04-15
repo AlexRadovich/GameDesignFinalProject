@@ -13,6 +13,9 @@ class SceneManager():
     def change_scenes(self,scene):
         self.current_scene = scene
 
+    def start_level_one(self, character):
+        self.current_scene = Scenes.LEVEL_ONE
+        self.screens[self.current_scene].assign_character(character)
 
     def add_scene(self, screen, scene):
         self.screens[screen] = scene

@@ -9,6 +9,7 @@ class CharacterSelectScreen():
         self.game = game
         self.scrnwidth, self.scrnheight = get_render_width(), get_render_height()
 
+
     def startup(self):
         self.char_bg = load_texture("assets/character_select/char1_select_bg.png")
         self.adspace = load_texture("assets/character_select/adspace.png")
@@ -20,10 +21,11 @@ class CharacterSelectScreen():
     def update(self):
 
         if is_key_pressed(KeyboardKey.KEY_ENTER):
-            self.game.scene_manager.change_scenes(Scenes.TITLE)
-        if is_key_pressed(KeyboardKey.KEY_LEFT):
+            #self.game.scene_manager.change_scenes(Scenes.TITLE)
+            self.game.scene_manager.start_level_one((self.selection_index % 2) + 1)
+        if is_key_pressed(KeyboardKey.KEY_LEFT) or is_key_pressed(KeyboardKey.KEY_A):
             self.selection_index -= 1
-        elif is_key_pressed(KeyboardKey.KEY_RIGHT):
+        elif is_key_pressed(KeyboardKey.KEY_RIGHT) or is_key_pressed(KeyboardKey.KEY_D):
             self.selection_index += 1
 
     def draw(self):
