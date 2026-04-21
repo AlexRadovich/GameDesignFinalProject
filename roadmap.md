@@ -57,3 +57,17 @@ chore(lvl1): add the core structure for level one and the basic foundations for 
 
 * Next/To-do:
 flesh out lvl 1 more
+
+### 4/21/2026 3 p.m.
+
+* Goal:
+Flesh out the sizings and tilemap for level one, add basic movement functionality to the character so that they can interact with the level
+
+* Implementation:
+Use Aseprite for drawing and the tilemap implementation we saw in class and https://github.com/NguyenLe15325/Python-raylib/blob/main/11.2D_platformer_clone.py 
+
+* Commit message:
+feat(lvl1) implemented character movement within and interactions within level one.
+
+* Next/To-do:
+do lvl 1 art and begin either camera work or title screen art

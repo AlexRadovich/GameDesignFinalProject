@@ -1,11 +1,13 @@
-import settings
-import enums
+from settings import *
+from enums import *
 from pyray import * 
 
 class TestSubject():
 
-    def __init__(self, game):
+    def __init__(self, game, level, position):
         self.game = game
+        self.level = level
+        self.position = position
 
     def startup(self):
         pass
