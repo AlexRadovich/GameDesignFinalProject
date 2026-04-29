@@ -35,9 +35,10 @@ class Adspace():
 
         if(is_key_pressed(KeyboardKey.KEY_W) and self.grounded):
             self.vy -= PLAYER_JUMP_SPEED
-            self.grounded = False
+        self.grounded = False
 
         self.vy += GRAVITY
+
 
         self.rect.x += self.vx * dt
         self.handle_collision(self.level.tilemap, 'x')

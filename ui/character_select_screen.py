@@ -30,39 +30,41 @@ class CharacterSelectScreen():
 
     def draw(self):
 
+        s = self.scrnwidth/1920
+
         draw_texture_ex(self.bg, Vector2(0,0), 0, 7, GRAY)
 
         match self.selection_index % 3:
 
             case 0:
-                draw_texture_ex(self.char_bg, Vector2(220,380), 0, 5, WHITE)
-                draw_texture_ex(self.char_bg, Vector2(750,385), 0, 5, GRAY)
-                draw_texture_ex(self.char_bg, Vector2(1280,385), 0, 5, GRAY)  
+                draw_texture_ex(self.char_bg, Vector2(220*s,380*s), 0, 5, WHITE)
+                draw_texture_ex(self.char_bg, Vector2(750*s,385*s), 0, 5, GRAY)
+                draw_texture_ex(self.char_bg, Vector2(1280*s,385*s), 0, 5, GRAY)  
 
-                draw_texture_ex(self.adspace, Vector2(264,392), 0, 2, WHITE)
-                draw_texture_ex(self.test_subject, Vector2(794,395), 0, 2, GRAY)
+                draw_texture_ex(self.adspace, Vector2(264*s,392*s), 0, 2, WHITE)
+                draw_texture_ex(self.test_subject, Vector2(794*s,395*s), 0, 2, GRAY)
 
 
             case 1:
-                draw_texture_ex(self.char_bg, Vector2(220,385), 0, 5, GRAY)
-                draw_texture_ex(self.char_bg, Vector2(750,380), 0, 5, WHITE)
-                draw_texture_ex(self.char_bg, Vector2(1280,385), 0, 5, GRAY)  
+                draw_texture_ex(self.char_bg, Vector2(220*s,385*s), 0, 5, GRAY)
+                draw_texture_ex(self.char_bg, Vector2(750*s,380*s), 0, 5, WHITE)
+                draw_texture_ex(self.char_bg, Vector2(1280*s,385*s), 0, 5, GRAY)  
 
-                draw_texture_ex(self.adspace, Vector2(264,397), 0, 2, GRAY)
-                draw_texture_ex(self.test_subject, Vector2(794,390), 0, 2, WHITE)      
+                draw_texture_ex(self.adspace, Vector2(264*s,397*s), 0, 2, GRAY)
+                draw_texture_ex(self.test_subject, Vector2(794*s,390*s), 0, 2, WHITE)      
   
 
             case 2:
-                draw_texture_ex(self.char_bg, Vector2(220,385), 0, 5, GRAY)
-                draw_texture_ex(self.char_bg, Vector2(750,385), 0, 5, GRAY)
-                draw_texture_ex(self.char_bg, Vector2(1280,380), 0, 5, WHITE) 
+                draw_texture_ex(self.char_bg, Vector2(220*s,385*s), 0, 5, GRAY)
+                draw_texture_ex(self.char_bg, Vector2(750*s,385*s), 0, 5, GRAY)
+                draw_texture_ex(self.char_bg, Vector2(1280*s,380*s), 0, 5, WHITE) 
 
-                draw_texture_ex(self.adspace, Vector2(264,397), 0, 2, GRAY)
-                draw_texture_ex(self.test_subject, Vector2(794,395), 0, 2, GRAY)      
+                draw_texture_ex(self.adspace, Vector2(264*s,397*s), 0, 2, GRAY)
+                draw_texture_ex(self.test_subject, Vector2(794*s,395*s), 0, 2, GRAY)      
 
-        draw_texture_ex(self.lock, Vector2(1410,685), 0, 2, WHITE)      
-        draw_texture_ex(self.header, Vector2(self.scrnwidth//2 - 700,40), 0, 7, WHITE)
-        #draw_line(self.scrnwidth//2 ,0,self.scrnwidth//2 ,self.scrnheight, RED)
+        draw_texture_ex(self.lock, Vector2(1410*s,685*s), 0, 2, WHITE)      
+        draw_texture_ex(self.header, Vector2((self.scrnwidth//2 - 700)*s,40*s), 0, 7, WHITE)
+
 
 
     def shutdown(self):

@@ -71,3 +71,20 @@ feat(lvl1) implemented character movement within and interactions within level o
 
 * Next/To-do:
 do lvl 1 art and begin either camera work or title screen art
+
+### 4/22/2026 10:30 a.m.
+
+* Goal: do basic level 1 changes and refine player movement
+
+* Implementation: own work and design
+
+* Commit message:
+chore(player): fix player movement bugs and change up level 1 textures
+
+* Next/To-do:
+do lvl 1 art and begin either camera work or title screen art
+
+
+
+
+
