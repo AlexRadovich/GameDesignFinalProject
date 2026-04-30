@@ -102,6 +102,18 @@ feat(launch) player can now launch using space bar
 * Next:
 level design
 
+### 4/30/2026 2:40 p.m.
+
+* Goal: design lvl 1 and improve jumping and implement sliding mechanics
+
+* Implementation:
+Ideas from jump king and own design, used claude and chatgpt to try and help with the sliding mechanics in adspace.py, but they really didn't help much
+
+* feat(sliding): implemented ice sliding mechanics as blocks
+
+* Next:
+level design
+
 
 
 

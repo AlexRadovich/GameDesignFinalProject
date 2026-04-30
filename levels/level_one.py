@@ -16,11 +16,11 @@ class LevelOne():
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            [1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1],
-            [1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            [1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            [1,1,1,1,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            [1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1,4,2,1,1,1,1,1,1,2,5,1,1,1,1],
+            [1,1,1,1,1,1,1,1,4,1,1,1,1,1,1,1,1,1,2,5,1,1,1],
+            [1,1,1,1,1,1,1,4,1,1,1,1,1,1,1,1,1,1,1,2,5,1,1],
+            [1,1,1,1,1,1,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,1,1,1,1,4,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
             [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]
         ]
         self.scrnwidth, self.scrnheight = get_render_width(), get_render_height()
@@ -50,20 +50,23 @@ class LevelOne():
 
         for ix, row in enumerate(self.tilemap):
             for ix2, tile in enumerate(row):
-                if tile == World.AIR:
-                    pass
+                match tile:
+                    case World.AIR:
+                        pass
                     #draw_rectangle(ix2*self.blockwidth, ix*self.blockheight, self.blockwidth, self.blockheight, SKYBLUE)
 
-                elif tile == World.SOLID:
-                    if ix2%2 == 0:
-                    #draw_rectangle_pro(Rectangle(ix2*self.blockwidth, ix*self.blockheight, self.blockwidth, self.blockheight), [], 0, GREEN)
-                        draw_texture_pro(self.sheet, LIGHT_COBBLE_A, Rectangle(ix2*self.blockwidth, ix*self.blockheight, self.blockwidth, self.blockheight), [],0,WHITE)
-                    else:
-                        draw_texture_pro(self.sheet, DARK_COBBLE_B, Rectangle(ix2*self.blockwidth, ix*self.blockheight, self.blockwidth, self.blockheight), [],0,WHITE)
+                    case World.SOLID:
+                        if ix2%2 == 0:
+                        #draw_rectangle_pro(Rectangle(ix2*self.blockwidth, ix*self.blockheight, self.blockwidth, self.blockheight), [], 0, GREEN)
+                            draw_texture_pro(self.sheet, LIGHT_COBBLE_A, Rectangle(ix2*self.blockwidth, ix*self.blockheight, self.blockwidth, self.blockheight), [],0,WHITE)
+                        else:
+                            draw_texture_pro(self.sheet, DARK_COBBLE_B, Rectangle(ix2*self.blockwidth, ix*self.blockheight, self.blockwidth, self.blockheight), [],0,WHITE)
+                    
+                    case World.SLOPELEFT:
+                        draw_texture_pro(self.sheet, SLOPER_LEFT, Rectangle(ix2*self.blockwidth, ix*self.blockheight, self.blockwidth, self.blockheight), [],0,WHITE)
 
-                    #draw_texture_pro(self.sheet, Rectangle(0,0,32,32), Rectangle(500,500,50,50), [],0,GRAY)
-                    #draw_rectangle(ix2*self.blockwidth, ix*self.blockheight, self.blockwidth, self.blockheight, GRAY)
-
+                    case World.SLOPERIGHT:
+                        draw_texture_pro(self.sheet, SLOPER_RIGHT, Rectangle(ix2*self.blockwidth, ix*self.blockheight, self.blockwidth, self.blockheight), [],0,WHITE)
 
 
         draw_text(str(self.blockwidth), 100,200,20,BLACK)

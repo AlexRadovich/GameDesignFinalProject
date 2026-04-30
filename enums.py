@@ -17,3 +17,5 @@ class World(IntEnum):
     AIR = 1
     SOLID = 2
     ROPE = 3
+    SLOPELEFT = 4
+    SLOPERIGHT = 5
