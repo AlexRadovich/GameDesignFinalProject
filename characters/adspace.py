@@ -1,6 +1,7 @@
 from settings import *
 from enums import *
 from pyray import * 
+import math
 
 class Adspace():
 
@@ -16,18 +17,34 @@ class Adspace():
 
         self.grounded = True
 
+        self.jump_indicator = Vector2(self.rect.x + .5*(self.rect.width), self.rect.y)
+        self.launching = False
+        self.time_since_launch = 0
+        self.launch_angle = Vector2(0,0)
+
 
     def startup(self):
         pass
 
+    def launch(self):
+        self.vy -= PLAYER_JUMP_SPEED
+
+
     def update(self):
         dt = get_frame_time()
-        self.vx = 0
+        if self.grounded:
+            self.vx = 0
 
-        if(is_key_down(KeyboardKey.KEY_A)):
+        if(is_key_down(KeyboardKey.KEY_A)and (not self.launching) and self.grounded):
             self.vx -= self.speed  
-        if(is_key_down(KeyboardKey.KEY_D)):
+        elif(is_key_down(KeyboardKey.KEY_A)and (not self.launching)):
+            self.vx -= self.speed * PLAYER_JUMP_MOVEMENT
+
+        if(is_key_down(KeyboardKey.KEY_D) and (not self.launching)and self.grounded):
             self.vx += self.speed       
+        elif(is_key_down(KeyboardKey.KEY_D)and (not self.launching)):
+            self.vx += self.speed * PLAYER_JUMP_MOVEMENT
+
 
         if(self.grounded):
             self.vy = 0
@@ -35,6 +52,32 @@ class Adspace():
 
         if(is_key_pressed(KeyboardKey.KEY_W) and self.grounded):
             self.vy -= PLAYER_JUMP_SPEED
+
+        ##Launch logic
+        if(is_key_pressed(KeyboardKey.KEY_SPACE) and self.grounded and (not self.launching)):
+            self.jump_indicator = Vector2(self.rect.x + .5*(self.rect.width), self.rect.y)
+            self.time_since_launch = 0
+            self.launching = True
+
+        elif(is_key_pressed(KeyboardKey.KEY_SPACE) and self.launching):
+            self.vx = self.launch_angle.x * 10
+            self.vy = self.launch_angle.y * 10
+            self.launching = False
+
+        elif(self.launching):
+            self.time_since_launch += dt
+            iter = self.time_since_launch * LAUNCH_ROTATION_SPEED
+
+            launch_y = math.cos((math.pi/2)*math.sin(iter)) * -LAUNCH_INDICATOR_SCALE
+            launch_x = math.sin((math.pi/2)*math.sin(iter)) * LAUNCH_INDICATOR_SCALE
+
+            self.launch_angle = (Vector2(launch_x,launch_y))
+
+
+
+
+        
+
         self.grounded = False
 
         self.vy += GRAVITY
@@ -94,6 +137,10 @@ class Adspace():
         draw_text(f"vy:{self.vy}" , 500, 550, 30, RED)
         draw_text(f"grounded:{self.grounded}" , 500, 600, 30, RED)
         draw_text("ADSPACE", 100, 300, 20, BLACK)
+
+        draw_circle_v(self.jump_indicator, 10, RED)
+        draw_text(f"{(self.launch_angle.x), (self.launch_angle.y)}", 400,400,20,RED)
+        draw_line_v(self.jump_indicator, vector2_add(self.launch_angle,self.jump_indicator), RED)
 
     def shutdown(self):
         pass

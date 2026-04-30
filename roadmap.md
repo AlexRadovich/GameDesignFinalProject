@@ -84,6 +84,24 @@ chore(player): fix player movement bugs and change up level 1 textures
 * Next/To-do:
 do lvl 1 art and begin either camera work or title screen art
 
+### 4/28/2026 11 p.m.
+
+* Goal: work on level one actual design
+
+* Implementation: own design
+
+### 4/29/2026 10 a.m.
+
+* Goal: do the jumping logic for the character
+
+* Implementation: own design and ai for some of the trig equations
+
+* Commit message:
+feat(launch) player can now launch using space bar
+
+* Next:
+level design
+
 
 
 
