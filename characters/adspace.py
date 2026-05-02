@@ -14,21 +14,28 @@ class Adspace():
 
         self.vx = 0
         self.vy = 0
+        self.bonusx = 0
 
-        self.grounded = True
 
         self.jump_indicator = Vector2(self.rect.x + .5*(self.rect.width), self.rect.y)
         self.launching = False
         self.time_since_launch = 0
         self.launch_angle = Vector2(0,0)
 
-        self.bonusx = 0
-
+        self.facing_right = False
+        self.grounded = True
         self.sliding = False
+        self.cheats = False
+
+        self.timing = 0
+        self.frame = 1
+        self.anim = Anims.IDLE
+
+
 
 
     def startup(self):
-        pass
+        self.tiles = load_texture("assets/adspace_tiles.png")
 
     def launch(self):
         self.vy -= PLAYER_JUMP_SPEED
@@ -36,28 +43,49 @@ class Adspace():
 
     def update(self):
         dt = get_frame_time()
+        self.timing += dt
+        if is_key_pressed(KeyboardKey.KEY_C):
+            self.cheats = not self.cheats
+
+        if self.timing > PLAYER_ANIMATION_FPS:
+            self.timing = 0
+            self.frame += 1
+        
         self.bonusx = 0
 
 
         if self.grounded:
             self.vx = 0
 
-        if(is_key_down(KeyboardKey.KEY_A)and (not self.launching) and self.grounded):
+        if(is_key_down(KeyboardKey.KEY_A)and (((not self.launching) and self.grounded) or self.cheats)):
             self.vx -= self.speed  
+            self.facing_right = False
+            self.anim = Anims.WALKING
+            if self.cheats:
+                self.vx = max(self.vx,-100)
+
         elif(is_key_down(KeyboardKey.KEY_A)and (not self.launching)):
             self.bonusx = self.speed * -PLAYER_JUMP_MOVEMENT
 
-        if(is_key_down(KeyboardKey.KEY_D) and (not self.launching)and self.grounded):
-            self.vx += self.speed       
+        if(is_key_down(KeyboardKey.KEY_D) and (((not self.launching) and self.grounded) or self.cheats)):
+            self.vx += self.speed      
+            self.facing_right = True
+            self.anim = Anims.WALKING
+            if self.cheats:
+                self.vx = min(self.vx,100)
+
         elif(is_key_down(KeyboardKey.KEY_D)and (not self.launching)):
             self.bonusx = self.speed * PLAYER_JUMP_MOVEMENT
+
+        elif(not is_key_down(KeyboardKey.KEY_A) and not is_key_down(KeyboardKey.KEY_D)):
+            self.anim = Anims.IDLE
 
 
         if(self.grounded):
             self.vy = 0
             pass
 
-        if(is_key_pressed(KeyboardKey.KEY_W) and self.grounded):
+        if(is_key_pressed(KeyboardKey.KEY_W) and self.grounded and not self.launching):
             self.vy -= PLAYER_JUMP_SPEED
 
         ##Launch logic
@@ -75,6 +103,11 @@ class Adspace():
             self.time_since_launch += dt
             iter = self.time_since_launch * LAUNCH_ROTATION_SPEED
 
+            if not self.facing_right:
+                iter += 7*math.pi/8
+            else:
+                iter -= math.pi /8
+
             launch_y = math.cos((math.pi/2)*math.sin(iter)) * -LAUNCH_INDICATOR_SCALE
             launch_x = math.sin((math.pi/2)*math.sin(iter)) * LAUNCH_INDICATOR_SCALE
 
@@ -87,16 +120,22 @@ class Adspace():
 
         self.grounded = False
 
-        self.vy += GRAVITY 
+        if not self.cheats:
+            self.vy += GRAVITY 
+        else:
+            self.vy -= 10
+
         #self.vx += self.bonusx
-
-
-        self.rect.x += (self.vx ) * dt
-        self.handle_collision(self.level.tilemap, 'x')
+        if self.vx > 0:
+            self.facing_right = True
 
 
         self.rect.y += self.vy * dt
-        self.handle_collision(self.level.tilemap, 'y')
+        self.handle_collision(self.level.maps[self.level.current_screen], 'y')
+        self.rect.x += (self.vx ) * dt
+        self.handle_collision(self.level.maps[self.level.current_screen], 'x')
+
+
 
         self.rect.x = max(0, min(self.level.scrnwidth - self.rect.width, self.rect.x))
 
@@ -196,7 +235,7 @@ class Adspace():
                                 if player_left < tile_right and player_bottom > slope_y_at_foot:
                                     self.rect.x = tile_right
                                     self.vx = 0
-                if (level[row][col] == World.SOLID):
+                if (level[row][col] == World.LIGHTCOBBLE  or level[row][col] == World.BRICK or level[row][col] == World.DARKCOBBLE or level[row][col] == World.CRATE):
                     block = Rectangle(col * self.level.blockwidth, row * self.level.blockheight, self.level.blockwidth, self.level.blockheight)
 
                     if check_collision_recs(self.rect, block):
@@ -234,6 +273,23 @@ class Adspace():
         draw_text(f"vx:{self.vx}" , 500, 650, 30, RED)
         draw_text(f"sliding:{self.sliding}" , 500, 700, 30, RED)
         draw_text("ADSPACE", 100, 300, 20, BLACK)
+        #scaled = Rectangle(self.rect.x + (self.rect.width/12), self.rect.y + (self.rect.height/6), self.rect.width * 5/6, self.rect.height * 5/6)
+        #draw_rectangle_rec(scaled,GREEN)
+        draw_text(f"{self.anim=}", 600,600,30,GREEN)
+        match self.anim:
+
+            case Anims.IDLE:
+                if self.facing_right:
+                    draw_texture_pro(self.tiles,Rectangle(((self.frame %2) * 32) + 3,38,26,26 ), self.rect, Vector2(0,0),0,WHITE)
+                else:
+                    draw_texture_pro(self.tiles,Rectangle(((self.frame %2) * 32) + 3,38,-26,26 ), self.rect, Vector2(0,0),0,WHITE)
+
+            case Anims.WALKING:
+                if self.facing_right:
+                    draw_texture_pro(self.tiles,Rectangle(((self.frame %4) * 32) + 3,6,26,26 ), self.rect, Vector2(0,0),0,WHITE)
+                else:
+                    draw_texture_pro(self.tiles,Rectangle(((self.frame %4) * 32) + 3,6,-26,26 ), self.rect, Vector2(0,0),0,WHITE)
+
 
         draw_text(f"{(self.launch_angle.x), (self.launch_angle.y)}", 400,400,20,RED)
 
@@ -245,4 +301,4 @@ class Adspace():
             #draw_line_v(self.jump_indicator, vector2_add(self.launch_angle,self.jump_indicator), RED)
 
     def shutdown(self):
-        pass
+        unload_texture(self.tiles)

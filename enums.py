@@ -15,7 +15,15 @@ class Characters(IntEnum):
 class World(IntEnum):
 
     AIR = 1
-    SOLID = 2
+    LIGHTCOBBLE = 2
     ROPE = 3
     SLOPELEFT = 4
     SLOPERIGHT = 5
+    BRICK = 6
+    DARKCOBBLE = 7
+    CRATE = 8
+
+class Anims(IntEnum):
+
+    WALKING = 1
+    IDLE = 2

@@ -109,12 +109,20 @@ level design
 * Implementation:
 Ideas from jump king and own design, used claude and chatgpt to try and help with the sliding mechanics in adspace.py, but they really didn't help much
 
-* feat(sliding): implemented ice sliding mechanics as blocks
+* Commit message:
+feat(sliding): implemented ice sliding mechanics as blocks
 
 * Next:
 level design
 
 
+### 5/1/2026
 
+* Goal:
+do level design and maybe camera
 
+* Implementation:
+https://github.com/NguyenLe15325/Python-raylib/blob/main/11.2D_platformer_clone.py  and own design
 
+* Commit message:
+feat(screens and level): added cheat mode (c), level design, and screen camera movement
