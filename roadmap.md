@@ -125,4 +125,7 @@ do level design and maybe camera
 https://github.com/NguyenLe15325/Python-raylib/blob/main/11.2D_platformer_clone.py  and own design
 
 * Commit message:
-feat(screens and level): added cheat mode (c), level design, and screen camera movement
+feat(screens and level): added cheat mode (c), level design, character animations, and screen camera movement
+
+* Next:
+more level design
