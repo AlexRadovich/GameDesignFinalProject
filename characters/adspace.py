@@ -57,28 +57,43 @@ class Adspace():
         if self.grounded:
             self.vx = 0
 
-        if(is_key_down(KeyboardKey.KEY_A)and (((not self.launching) and self.grounded) or self.cheats)):
+        left = is_key_down(KeyboardKey.KEY_A) or is_key_down(KeyboardKey.KEY_LEFT)
+        right = is_key_down(KeyboardKey.KEY_D) or is_key_down(KeyboardKey.KEY_RIGHT)
+        if(left and (((not self.launching) and self.grounded) or self.cheats)):
             self.vx -= self.speed  
             self.facing_right = False
             self.anim = Anims.WALKING
             if self.cheats:
                 self.vx = max(self.vx,-100)
 
-        elif(is_key_down(KeyboardKey.KEY_A)and (not self.launching)):
+        elif(left and (not self.launching)):
             self.bonusx = self.speed * -PLAYER_JUMP_MOVEMENT
 
-        if(is_key_down(KeyboardKey.KEY_D) and (((not self.launching) and self.grounded) or self.cheats)):
+        if(right and (((not self.launching) and self.grounded) or self.cheats)):
             self.vx += self.speed      
             self.facing_right = True
             self.anim = Anims.WALKING
             if self.cheats:
                 self.vx = min(self.vx,100)
 
-        elif(is_key_down(KeyboardKey.KEY_D)and (not self.launching)):
+        elif(right and (not self.launching)):
             self.bonusx = self.speed * PLAYER_JUMP_MOVEMENT
 
         elif(not is_key_down(KeyboardKey.KEY_A) and not is_key_down(KeyboardKey.KEY_D)):
             self.anim = Anims.IDLE
+
+        if(not self.grounded and self.vx == 0 and self.vy == 0):
+            self.vx += self.speed
+        
+        if(self.grounded and self.vx == 0):
+            self.anim = Anims.IDLE
+
+
+        if(self.launching):
+            self.anim = Anims.LAUNCHING
+
+        if not self.grounded:
+            self.anim = Anims.AIRBORNE
 
 
         if(self.grounded):
@@ -149,6 +164,19 @@ class Adspace():
 
         for row in range(min_tile_y, max_tile_y + 1):
             for col in range(min_tile_x,max_tile_x + 1):
+
+                if level[row][col] == World.POT:
+                    level[row][col] = World.POT_PLANT
+                    self.level.victory()
+
+
+                if level[row][col] == World.DOOR:
+                    self.level.current_screen += 1
+                    self.rect.x = self.level.scrnwidth//2
+                    self.vx = 0
+                    self.vy = 0
+                    self.rect.y = self.level.scrnheight * 7/8
+                    #self.rect.y -= self.level.scrnheight
 
 
                 # ── SLOPERIGHT: \ hypotenuse from (tile_left, tile_top) → (tile_right, tile_bottom) ──
@@ -235,7 +263,8 @@ class Adspace():
                                 if player_left < tile_right and player_bottom > slope_y_at_foot:
                                     self.rect.x = tile_right
                                     self.vx = 0
-                if (level[row][col] == World.LIGHTCOBBLE  or level[row][col] == World.BRICK or level[row][col] == World.DARKCOBBLE or level[row][col] == World.CRATE):
+
+                if (level[row][col] == World.LIGHTCOBBLE  or level[row][col] == World.BRICK or level[row][col] == World.DARKCOBBLE or level[row][col] == World.CRATE or level[row][col] == World.HARD_WINDOW or level[row][col] == World.SOLID):
                     block = Rectangle(col * self.level.blockwidth, row * self.level.blockheight, self.level.blockwidth, self.level.blockheight)
 
                     if check_collision_recs(self.rect, block):
@@ -266,7 +295,7 @@ class Adspace():
 
 
 
-        draw_rectangle_rec(self.rect, RED)
+        draw_rectangle_rec(self.rect, TRANSPARENT)
         draw_text(f"posy:{self.rect.y}" , 500, 500, 30, RED)
         draw_text(f"vy:{self.vy}" , 500, 550, 30, RED)
         draw_text(f"grounded:{self.grounded}" , 500, 600, 30, RED)
@@ -276,19 +305,34 @@ class Adspace():
         #scaled = Rectangle(self.rect.x + (self.rect.width/12), self.rect.y + (self.rect.height/6), self.rect.width * 5/6, self.rect.height * 5/6)
         #draw_rectangle_rec(scaled,GREEN)
         draw_text(f"{self.anim=}", 600,600,30,GREEN)
+        rec = Rectangle(self.rect.x -5, self.rect.y - 10, self.rect.width + 10, self.rect.height+10)
         match self.anim:
+
+            case Anims.AIRBORNE:
+                if self.facing_right:
+                    draw_texture_pro(self.tiles,Rectangle(((self.frame %1) * 32), 96, 32, 32 ), rec, Vector2(0,0),0,WHITE)
+                else:
+                    draw_texture_pro(self.tiles,Rectangle(((self.frame %1) * 32), 96, -32, 32 ), rec, Vector2(0,0),0,WHITE)
+
+
+            case Anims.LAUNCHING:
+                if self.facing_right:
+                    draw_texture_pro(self.tiles,Rectangle(0,64,32,32),rec, Vector2(0,0),0,WHITE)
+                else:
+                    draw_texture_pro(self.tiles,Rectangle(0,64,-32,32),rec, Vector2(0,0),0,WHITE)
+
 
             case Anims.IDLE:
                 if self.facing_right:
-                    draw_texture_pro(self.tiles,Rectangle(((self.frame %2) * 32) + 3,38,26,26 ), self.rect, Vector2(0,0),0,WHITE)
+                    draw_texture_pro(self.tiles,Rectangle(((self.frame %2) * 32) ,32,32,32 ), rec, Vector2(0,0),0,WHITE)
                 else:
-                    draw_texture_pro(self.tiles,Rectangle(((self.frame %2) * 32) + 3,38,-26,26 ), self.rect, Vector2(0,0),0,WHITE)
+                    draw_texture_pro(self.tiles,Rectangle(((self.frame %2) * 32) ,32,-32,32 ), rec, Vector2(0,0),0,WHITE)
 
             case Anims.WALKING:
                 if self.facing_right:
-                    draw_texture_pro(self.tiles,Rectangle(((self.frame %4) * 32) + 3,6,26,26 ), self.rect, Vector2(0,0),0,WHITE)
+                    draw_texture_pro(self.tiles,Rectangle(((self.frame %4) * 32) ,0,32,32 ), rec, Vector2(0,0),0,WHITE)
                 else:
-                    draw_texture_pro(self.tiles,Rectangle(((self.frame %4) * 32) + 3,6,-26,26 ), self.rect, Vector2(0,0),0,WHITE)
+                    draw_texture_pro(self.tiles,Rectangle(((self.frame %4) * 32) ,0,-32,32 ), rec, Vector2(0,0),0,WHITE)
 
 
         draw_text(f"{(self.launch_angle.x), (self.launch_angle.y)}", 400,400,20,RED)

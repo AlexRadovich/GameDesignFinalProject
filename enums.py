@@ -22,8 +22,18 @@ class World(IntEnum):
     BRICK = 6
     DARKCOBBLE = 7
     CRATE = 8
+    WINDOW = 9
+    DOOR = 10
+    HARD_WINDOW = 11
+    SOLID = 12
+    WINDOW_TRANSPARENT = 13
+    POT = 14
+    POT_PLANT = 15
+    ARROW = 16
 
 class Anims(IntEnum):
 
     WALKING = 1
     IDLE = 2
+    LAUNCHING = 3
+    AIRBORNE = 4

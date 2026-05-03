@@ -129,3 +129,13 @@ feat(screens and level): added cheat mode (c), level design, character animation
 
 * Next:
 more level design
+
+### 5/2/2026
+* Goal:
+finish level design
+
+* Implementation:
+Aseprite and own design
+
+* Commit message:
+feat(added level two): finished off the level design for level two and added a win/end
