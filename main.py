@@ -13,6 +13,7 @@ if __name__ == "__main__":
     toggle_fullscreen()
 
     game.startup()
+    init_audio_device()
 
 
     while not window_should_close():
@@ -27,6 +28,7 @@ if __name__ == "__main__":
         end_drawing()
 
 close_window()
+close_audio_device()
   
 game.shutdown()
 

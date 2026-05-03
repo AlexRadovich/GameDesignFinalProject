@@ -139,3 +139,16 @@ Aseprite and own design
 
 * Commit message:
 feat(added level two): finished off the level design for level two and added a win/end
+
+* Next:
+Sound design
+
+### 5/2/2026
+* Goal: finish pieces and do sound design
+
+* Implementation:
+https://evilduckk.itch.io/hel-circle-sfx-and-music for walking and jumping sounds
+Aseprite for drawings
+
+* Commit message:
+feat(added sounds): sound effects on jump and move, added some images for title screen and thumbnail

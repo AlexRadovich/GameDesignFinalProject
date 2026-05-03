@@ -36,6 +36,8 @@ class Adspace():
 
     def startup(self):
         self.tiles = load_texture("assets/adspace_tiles.png")
+        self.walk = load_sound("assets/sound/walk.mp3") #https://evilduckk.itch.io/hel-circle-sfx-and-music
+        self.jump = load_sound("assets/sound/jump.mp3") #https://evilduckk.itch.io/hel-circle-sfx-and-music
 
     def launch(self):
         self.vy -= PLAYER_JUMP_SPEED
@@ -65,6 +67,8 @@ class Adspace():
             self.anim = Anims.WALKING
             if self.cheats:
                 self.vx = max(self.vx,-100)
+            if not is_sound_playing(self.walk):
+                play_sound(self.walk)
 
         elif(left and (not self.launching)):
             self.bonusx = self.speed * -PLAYER_JUMP_MOVEMENT
@@ -75,6 +79,8 @@ class Adspace():
             self.anim = Anims.WALKING
             if self.cheats:
                 self.vx = min(self.vx,100)
+            if not is_sound_playing(self.walk):
+                play_sound(self.walk)
 
         elif(right and (not self.launching)):
             self.bonusx = self.speed * PLAYER_JUMP_MOVEMENT
@@ -82,7 +88,7 @@ class Adspace():
         elif(not is_key_down(KeyboardKey.KEY_A) and not is_key_down(KeyboardKey.KEY_D)):
             self.anim = Anims.IDLE
 
-        if(not self.grounded and self.vx == 0 and self.vy == 0):
+        if(not self.grounded and self.vx == 0 and self.vy == 0  and self.sliding ):
             self.vx += self.speed
         
         if(self.grounded and self.vx == 0):
@@ -108,11 +114,15 @@ class Adspace():
             self.jump_indicator = Vector2(self.rect.x + .5*(self.rect.width), self.rect.y)
             self.time_since_launch = 0
             self.launching = True
+            play_sound(self.jump)
+
 
         elif(is_key_pressed(KeyboardKey.KEY_SPACE) and self.launching):
             self.vx = self.launch_angle.x * 10
             self.vy = self.launch_angle.y * 10
             self.launching = False
+            play_sound(self.jump)
+
 
         elif(self.launching):
             self.time_since_launch += dt
@@ -130,7 +140,6 @@ class Adspace():
 
 
 
-
         
 
         self.grounded = False
@@ -144,6 +153,7 @@ class Adspace():
         if self.vx > 0:
             self.facing_right = True
 
+        self.sliding = False
 
         self.rect.y += self.vy * dt
         self.handle_collision(self.level.maps[self.level.current_screen], 'y')
@@ -168,6 +178,10 @@ class Adspace():
                 if level[row][col] == World.POT:
                     level[row][col] = World.POT_PLANT
                     self.level.victory()
+
+                elif level[row][col] == World.SEED:
+                    level[row][col] = World.AIR
+                    level[row-2][col] = World.AIR
 
 
                 if level[row][col] == World.DOOR:
@@ -295,16 +309,16 @@ class Adspace():
 
 
 
-        draw_rectangle_rec(self.rect, TRANSPARENT)
-        draw_text(f"posy:{self.rect.y}" , 500, 500, 30, RED)
-        draw_text(f"vy:{self.vy}" , 500, 550, 30, RED)
-        draw_text(f"grounded:{self.grounded}" , 500, 600, 30, RED)
-        draw_text(f"vx:{self.vx}" , 500, 650, 30, RED)
-        draw_text(f"sliding:{self.sliding}" , 500, 700, 30, RED)
-        draw_text("ADSPACE", 100, 300, 20, BLACK)
+        # draw_rectangle_rec(self.rect, TRANSPARENT)
+        # draw_text(f"posy:{self.rect.y}" , 500, 500, 30, RED)
+        # draw_text(f"vy:{self.vy}" , 500, 550, 30, RED)
+        # draw_text(f"grounded:{self.grounded}" , 500, 600, 30, RED)
+        # draw_text(f"vx:{self.vx}" , 500, 650, 30, RED)
+        # draw_text(f"sliding:{self.sliding}" , 500, 700, 30, RED)
+        # draw_text("ADSPACE", 100, 300, 20, BLACK)
         #scaled = Rectangle(self.rect.x + (self.rect.width/12), self.rect.y + (self.rect.height/6), self.rect.width * 5/6, self.rect.height * 5/6)
         #draw_rectangle_rec(scaled,GREEN)
-        draw_text(f"{self.anim=}", 600,600,30,GREEN)
+        #draw_text(f"{self.anim=}", 600,600,30,GREEN)
         rec = Rectangle(self.rect.x -5, self.rect.y - 10, self.rect.width + 10, self.rect.height+10)
         match self.anim:
 
@@ -335,7 +349,7 @@ class Adspace():
                     draw_texture_pro(self.tiles,Rectangle(((self.frame %4) * 32) ,0,-32,32 ), rec, Vector2(0,0),0,WHITE)
 
 
-        draw_text(f"{(self.launch_angle.x), (self.launch_angle.y)}", 400,400,20,RED)
+        #draw_text(f"{(self.launch_angle.x), (self.launch_angle.y)}", 400,400,20,RED)
 
         if self.launching:
             draw_circle_v(self.jump_indicator, 10, RED)

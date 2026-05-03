@@ -30,6 +30,7 @@ class World(IntEnum):
     POT = 14
     POT_PLANT = 15
     ARROW = 16
+    SEED = 17
 
 class Anims(IntEnum):
 

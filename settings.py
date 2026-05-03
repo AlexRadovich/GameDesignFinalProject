@@ -29,6 +29,7 @@ WINDOW                   =  Rectangle(64,64,32,32)
 WINDOW_T                 =  Rectangle(64,96,32,32)
 ARROW                    =  Rectangle(64,128,32,32)
 DOOR                     =  Rectangle(96,64,32,32)
+SEED                     =  Rectangle(96,96,32,32)
 SOLID                    =  Rectangle(0,96,32,32)
 
 TRANSPARENT              =  Color(255,0,0,50)

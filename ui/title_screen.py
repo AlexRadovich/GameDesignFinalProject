@@ -9,7 +9,7 @@ class TitleScreen():
 
 
     def startup(self):
-        self.image = load_texture("assets/title_screen.png")
+        self.image = load_texture("assets/titlescrn.png")
         self.scrnwidth, self.scrnheight = get_render_width(), get_render_height()
         self.image_scale = int((self.scrnwidth / 320) + 1)  #320 == image width
 
@@ -22,7 +22,7 @@ class TitleScreen():
 
     def draw(self):
         draw_texture_ex(self.image, Vector2(0,0), 0,self.image_scale,WHITE)
-        draw_text("TITLESCRN DRAW", 100, 100, 30, RED)
+        draw_text("[PRESS ENTER]", self.scrnwidth//2-200, self.scrnheight//3 * 2, 50, RED)
 
 
     def shutdown(self):

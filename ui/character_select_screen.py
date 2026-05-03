@@ -17,12 +17,12 @@ class CharacterSelectScreen():
         self.bg = load_texture("assets/character_select/bg.png")
         self.header = load_texture("assets/character_select/headliner.png")
         self.lock = load_texture("assets/character_select/lock.png")
+        self.adnail = load_texture("assets/adspace_tiles.png")
 
     def update(self):
 
-        if is_key_pressed(KeyboardKey.KEY_ENTER):
-            #self.game.scene_manager.change_scenes(Scenes.TITLE)
-            self.game.scene_manager.start_level_one((self.selection_index % 2) + 1)
+        if is_key_pressed(KeyboardKey.KEY_ENTER) and self.selection_index % 3 == 0:
+            self.game.scene_manager.start_level_one((self.selection_index % 3) + 1)
         if is_key_pressed(KeyboardKey.KEY_LEFT) or is_key_pressed(KeyboardKey.KEY_A):
             self.selection_index -= 1
         elif is_key_pressed(KeyboardKey.KEY_RIGHT) or is_key_pressed(KeyboardKey.KEY_D):
@@ -63,7 +63,9 @@ class CharacterSelectScreen():
                 draw_texture_ex(self.test_subject, Vector2(794*s,395*s), 0, 2*s, GRAY)      
 
         draw_texture_ex(self.lock, Vector2(1410*s,685*s), 0, 2*s, WHITE)      
+        draw_texture_ex(self.lock, Vector2(880*s,690*s), 0, 2*s, WHITE)      
         draw_texture_ex(self.header, Vector2((self.scrnwidth//2 - 700)*s,40*s), 0, 7*s, WHITE)
+        draw_texture_pro(self.adnail, Rectangle(128,0,64,111), Rectangle(300*s,525*s, 256,432), Vector2(0,0), 0,WHITE)
 
 
 
@@ -74,5 +76,6 @@ class CharacterSelectScreen():
         unload_texture(self.adspace)
         unload_texture(self.test_subject)
         unload_texture(self.lock)
+        unload_texture(self.adnail)
         
         
