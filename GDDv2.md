@@ -1,10 +1,10 @@
-# Unnamed Dystopian Platformer
-
+# Concrete Climb
+## By Alex Radovich
 
 
 ## Table of Contents
 
-- [Unnamed Dystopian Platformer: Game Design Document](#unnamed-dystopian-platformer)
+- [Concrete Climb: Game Design Document](#unnamed-dystopian-platformer)
   - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
     - [Game Summary Pitch](#game-summary-pitch)
@@ -12,6 +12,8 @@
     - [Player Experience](#player-experience)
     - [Genre](#genre)
     - [Target Audience](#target-audience)
+    - [Technicals](#technical)
+
   - [Concept](#concept)
     - [Gameplay Overview](#gameplay-overview)
     - [Theme Interpretation](#theme-interpretation)
@@ -20,14 +22,12 @@
   - [Art](#art)
     - [Theme Interpretation](#theme-interpretation-1)
     - [Design](#design)
-  - [Audio](#audio)a
-    - [Music](#music)
+  - [Audio](#audio)
     - [Sound Effects](#sound-effects)
   - [Game Experience](#game-experience)
     - [UI](#ui)
     - [Controls](#controls)
-  - [Development Timeline](#development-timeline)
-    - [Minimum Lovable Product](#minimum-lovable-product)
+
   - [References](#references)
 
 ---
@@ -37,11 +37,11 @@
 
 ### Game Summary Pitch
 
-In a futuristic megacity filled with exploitation, lawlessness, and hopelessness,  the only way to survive is to be a bottom-level worker for a corporation, doing whatever they require for barely any pay.
+In a future version of Colgate where education is overrun and expoited by industry, the only way to survive as a student is to pick up an extra job as a bottom-level worker for a corporation, doing whatever they require for barely any pay.
 
-You've spent your entire life at the lowest levels of the city, where no sunlight ever reaches, and pollution sleeps alongside you. 
+You've spent your entire time here at the lowest levels of the city block, where no sunlight ever reaches, and pollution sleeps alongside you. 
 
-After years of living like this, you've all but resigned yourself to your lot in life. But one day, a small seed falls down into your shack, from the upper levels.
+You study the environment, but after years of living like this, you've all but resigned yourself to your lot in life. But one day, a small seed falls down to you, from the upper levels.
 
 You decide that, even if you would never do it for yourself, this seed deserves to go back to where it came from, to take in the sunlight and sprout.
 
@@ -71,10 +71,17 @@ These cities and the politics behind their construction in-universe mirror the b
 
 ![Bladerunner City](/assets/GDD/blade.jpeg)
 
+In general, I ended up opting for a design more inspired by jump king and aesthetic designs that were kind of inspired by the cyberpunk cities, but incorporated into a Colgate theme
+
 ### Player Experience
 
-The player sees the world behind the menu on the title screen, selects a character, gets a bit of visual storytelling, then wakes up in their shack at the bottom of a huge, dark metropolis.
+The player clicks through the title screen, selects a character, gets a bit of visual storytelling, then wakes up on the floor at the bottom of a huge, dark metropolis.
+There is a seed nearby, which must have fallen down. The player goes to get it, then begins the climb to get the seed to the sun.
 
+![Example Screenshot](/assets/GDD/ex_ss.png)
+
+Demo vid (w/o audio):
+https://drive.google.com/file/d/1UaaqbA4x1iTq4WX7zkassLTddmnBkxL4/view?usp=sharing
 ### Platform
 
 Mac and Windows via Pyray
@@ -86,22 +93,29 @@ Mac and Windows via Pyray
 
 ### Genre
 
-Roguelike, Platformer
+Platformer, Frustrating
 
 ### Target Audience
 
 Our class, and also any people who are fans of climbing games like Jump King
 
+### Technical
+
+- The crouch/launch mechanic was a really interesting technical thing. It took a lot of debugging and I consulted ChatGPT to get the equations right. I wanted the launch indicator line to move left and right, tracing out a semicircle above the player, but also ease in and out of the motion on the left and right. I used two equations, one for the y value of the line's endpoint, and one for the x value of the endpoint, and anchored the other end of the line at the player's head. This resulted in a vector that I could then scale and add to the player's velocity vector depending on the values of the line when space was pressed again. The equations, usually in terms of x, are in terms of a variable that increments with delta time in order to normalize to frame rate
+- The ice block mechanic was also very difficult to get right, and took a lot of debugging. I implemented them by using a special modification of the collision function in adspace.py. If the player is below the diagonal line of a block, (depending on if the slope goes to the right or to the left), the variable "sliding" gets set to true, which locks the player out of moving or jumping manually, and the movement of the player is forced to be horizontally off the edge of the slope, and vertically, gravity draws it back down to the diagonal line. 
 
 ## Concept
 
 ### Gameplay Overview
-The player jumps, climbs, and runs around the bottom levels of a massive city in order to climb up. The player will fight enemies to collect items that make their journey easier.
+The player jumps, and runs around the  levels of a massive city in order to climb up. After ascending high enough, the player leaves the lower levels and reaches an office building, which is the second level. Here the gameplay is more difficult and there are new mechanics with ice.
+
+
+
 
 ### Theme Interpretation
-The player selects a character that is defined by their extremely awful position in society, working as a lowest-level contract worker for a megacorporation. They don't know anything else, but they know that a seed needs sun to grow, so when one falls down to them, they decide to do whatever it takes to get it away from the awful world they know. 
+The player selects a character that an environmental studies student, but lives and works and studies in the lowest levels of a massive city. They have never actually seen the nature they study, but they know that a seed needs sun to grow, so when one falls down to them, they decide to do whatever it takes to get it away from the awful world they know. 
 
-The levels are based around climbing and getting stacking powerups to fights off the enemies they will face on their journey.
+The levels are based around climbing and trying again to climb back up when one inevitably falls down.
 
 
 ### Mechanics
@@ -125,52 +139,43 @@ The levels are based around climbing and getting stacking powerups to fights off
 | --- | --- |
 | **Ice** | Ice blocks are introduced, which will force your movement and restict jumping ability while on them |
 | **Flower pot** | Reaching the flower pot and touching it will plant the seed that you have, creating a small plant,which triggers the victory condition |
+
 ## Art
 
 ### Theme Interpretation
-There will be large city buildings and ruined construction everywhere in the lower levels. The character will have a sprite reflecting their awful job in the world. There will be sewage and garbage and otherwise generally awful things in the lowest levels that eventually get better and cleaner as you go up.
+There will be a dark, grimy, background and broken cobblestones all around the lower levels. It will be dark and everything will be stone. In the upper levels, in the office building, there is visible light and things are much brighter. It is clearly far above where you started. The blocks here are clean concrete and cold ice. 
 
 
 ### Design
-The design will largely follow the aesthetics of the cities in Cyberpunk and Bladerunner, as interpreted by my own artstyle
+I used Aseprite to design all of the art for this game. The design largely follows the aesthetics of the cities in Cyberpunk and Bladerunner, as interpreted by my own artstyle and incorporated into the narrative of an overrun Colgate. 
 
 
 ## Audio
 
-### Music
-Base grungy sounds moving into cleaner, airy notes as the player progresses
-
-
 
 ### Sound Effects
-Taking/dealing damage and walking will have basic foley noises attached to them
+Jumping and walking will have basic foley noises attached to them, sourced from other, similar games.
 
 
 ### UI
 
-The user will have an experience that is a combination of Jump King and Risk of Rain Returns, a platformer and a fighting roguelike
+The user will have an experience that is very similar to Jump King, but with a different core skill (control of the launching mechanic)
 
 ### Controls
 
 
-- WASD movement
-- Space bar to attack
+- A and D for left and right movement
+- W to small jump
+- Space bar to enter crouch mode
+- Space bar again to launch out of crouch mode
 
 ---
 
-## Development Timeline
-
-### Minimum Lovable Product
-
-| # | Assignment | Type | Status | Finish By | Notes |
-| --- | --- | --- | --- | --- | --- |
-| 1 | Initial Design Doc | doc | 🟢 | April 16, 10 PM | |
-| 2 | Code Commit V1 | dev | 🟡 | April 19, 10 PM | |
-| 3 | Final Code | dev | 🔴 |  April 30, 5 PM| |
-| 4 | Final Design Doc | doc | 🔴 | May 4, 10 PM | |
-| 5 | Demo Vid | doc | 🔴 | May 4, 10 PM | |
-| 6 | Presentation | other | 🔴 | May 6, ??:?? | |
 
 ## References
 
 - [Owl Chemist GDD](https://docs.google.com/document/d/1_iPOdIFm9iiRNyMTM2WL3YTD0CGeOks3YKBjTsDJvd8/edit?tab=t.0#heading=h.k2hqrk99qjg6)
+- https://evilduckk.itch.io/hel-circle-sfx-and-music (for sound effects)
+- https://github.com/NguyenLe15325/Python-raylib/blob/main/11.2D_platformer_clone.py (for some basic code structure and implementation ideas)
+- I used Claude once for some debugging on the ice block collision, but I ended up editing what it wrote anyway
+- I used ChatGPT to generate the equations to use for the sinusoidal motion of the launch indicator

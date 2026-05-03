@@ -301,11 +301,13 @@ class LevelOne():
                         draw_texture_pro(self.sheet, SLOPER_RIGHT, Rectangle(ix2*self.blockwidth, ix*self.blockheight, self.blockwidth, self.blockheight), [],0,WHITE)
 
 
-        #draw_text(str(self.blockwidth), 100,200,20,BLACK)
-        #draw_text(str(self.blockheight), 100,220,20,BLACK)
 
         if self.start:
             draw_text("GET THE SEED TO THE SUN!", self.scrnwidth//2,self.scrnheight//3*2,40, GREEN)
+            draw_text("[A] and [D] to move", self.scrnwidth-400,35,30,RED)
+            draw_text("[W] to small jump", self.scrnwidth-400,70,30,RED)
+            draw_text("[SPACE] to crouch", self.scrnwidth-400,105,30,RED)
+            draw_text("[SPACE] again to launch", self.scrnwidth-400,140,30,RED)
         self.character.draw()
 
     def shutdown(self):
