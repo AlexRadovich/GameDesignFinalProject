@@ -107,7 +107,7 @@ Our class, and also any people who are fans of climbing games like Jump King
 ## Concept
 
 ### Gameplay Overview
-The player jumps, and runs around the  levels of a massive city in order to climb up. After ascending high enough, the player leaves the lower levels and reaches an office building, which is the second level. Here the gameplay is more difficult and there are new mechanics with ice.
+The player jumps, and runs around the  levels of a massive city in order to climb up. After ascending high enough, the player leaves the lower levels and reaches an office building, which is the second level. Here the gameplay is more difficult and there are new mechanics with ice. There is also thought given to the hitbox size of the player, which is slightly larger than the player's sprite, so as to implement a version of "coyote time" for the player to make things easier to learn.
 
 
 
