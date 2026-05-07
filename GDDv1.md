@@ -20,7 +20,7 @@
   - [Art](#art)
     - [Theme Interpretation](#theme-interpretation-1)
     - [Design](#design)
-  - [Audio](#audio)
+  - [Audio](#audio)a
     - [Music](#music)
     - [Sound Effects](#sound-effects)
   - [Game Experience](#game-experience)

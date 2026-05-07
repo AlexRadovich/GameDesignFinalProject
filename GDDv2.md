@@ -128,6 +128,7 @@ The levels are based around climbing and trying again to climb back up when one 
 | **Launch Stance** | Pressing Space will lock you into a launching animation, and begin showing a launching indicator that moves back and forth. |
 | **Launch Jump** | While in launch stance, pressing space will launch you in the direction of the launch indicator |
 | **Bonking** | Hitting the side of a block while midair will "bonk" you off of it, reversing your horizontal velocity and having often devastating consequences, or necessary benefits within the level|
+| **Flying** | Pressing 'C' will reverse the effects of gravity, but also allow you to move side to side in midair, allowing the player to easily try again or bypass parts of levels|
 
 ---
 ---
